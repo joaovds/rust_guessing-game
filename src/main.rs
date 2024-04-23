@@ -1,10 +1,8 @@
 use rand::Rng;
-use std::io;
+use std::{cmp::Ordering, io};
 
 fn main() {
     let secret_number = rand::thread_rng().gen_range(1..=100);
-
-    println!("{secret_number}");
 
     println!("Guess the number!!!");
     println!("Please, input your guess...");
@@ -17,5 +15,9 @@ fn main() {
 
     let guess: u32 = guess.trim().parse().expect("Please type a number!...");
 
-    println!("You guessed: {guess}")
+    match guess.cmp(&secret_number) {
+        Ordering::Less => println!("{guess} too small!"),
+        Ordering::Greater => println!("{guess} too big!"),
+        Ordering::Equal => println!("You win! :)"),
+    }
 }
